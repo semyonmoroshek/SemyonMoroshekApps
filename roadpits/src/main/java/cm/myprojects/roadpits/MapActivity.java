@@ -44,7 +44,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-                    mLocationManager.requestLocationUpdates(mLocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+                    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
                 }
             }
         }
@@ -81,7 +81,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     List<Address> listAddresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
                     if(listAddresses != null && listAddresses.size() > 0){
-                        Log.i("placeinfo", listAddresses.get(0).toString());
                         String address ="";
                         if (listAddresses.get(0).getSubThoroughfare() != null){
                             address += listAddresses.get(0).getSubThoroughfare() + " ";
@@ -98,7 +97,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         if(listAddresses.get(0).getCountryName() != null){
                             address += listAddresses.get(0).getCountryName() + ", ";
                         }
-                        Toast.makeText(MapActivity.this, address, Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -134,7 +132,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }else{
                 mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
-                Location lastKnownLocation = mLocationManager.getLastKnownLocation(mLocationManager.GPS_PROVIDER);
+                Location lastKnownLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
                 LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                 mMap.clear();
@@ -143,7 +141,5 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             }
         }
-
-
     }
 }

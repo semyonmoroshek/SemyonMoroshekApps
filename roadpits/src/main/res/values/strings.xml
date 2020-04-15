@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Road Pits</string>
     <string name="title_activity_map">Map</string>
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">2QhlmWX9ZWv1xgzjklOUfCFiJVvgMBxudSYpMgxX</string>
+    <string name="back4app_client_key">jIUOyycR4Fh4DAI6luK990BdpTixViGPcF27Yw2o</string>
 </resources>
