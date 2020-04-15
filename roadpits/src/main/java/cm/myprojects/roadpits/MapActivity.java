@@ -15,8 +15,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -64,46 +62,47 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         mLocationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(userLocation).title("Your location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+                mMap.addMarker(new MarkerOptions().position(userLocation).title("You are here!"));
 
-                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-
-                try {
-
-                    List<Address> listAddresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                    if(listAddresses != null && listAddresses.size() > 0){
-                        String address ="";
-                        if (listAddresses.get(0).getSubThoroughfare() != null){
-                            address += listAddresses.get(0).getSubThoroughfare() + " ";
-                        }
-                        if(listAddresses.get(0).getThoroughfare() != null){
-                            address += listAddresses.get(0).getThoroughfare() + ", ";
-                        }
-                        if(listAddresses.get(0).getLocality() != null){
-                            address += listAddresses.get(0).getLocality() + ", ";
-                        }
-                        if(listAddresses.get(0).getPostalCode() != null){
-                            address += listAddresses.get(0).getPostalCode() + ", ";
-                        }
-                        if(listAddresses.get(0).getCountryName() != null){
-                            address += listAddresses.get(0).getCountryName() + ", ";
-                        }
-
-
-                    }
-                } catch (IOException e) {
-
-                    e.printStackTrace();
-                }
+//
+//                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+//
+//                try {
+//
+//                    List<Address> listAddresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+//
+//                    if(listAddresses != null && listAddresses.size() > 0){
+//                        String address ="";
+//                        if (listAddresses.get(0).getSubThoroughfare() != null){
+//                            address += listAddresses.get(0).getSubThoroughfare() + " ";
+//                        }
+//                        if(listAddresses.get(0).getThoroughfare() != null){
+//                            address += listAddresses.get(0).getThoroughfare() + ", ";
+//                        }
+//                        if(listAddresses.get(0).getLocality() != null){
+//                            address += listAddresses.get(0).getLocality() + ", ";
+//                        }
+//                        if(listAddresses.get(0).getPostalCode() != null){
+//                            address += listAddresses.get(0).getPostalCode() + ", ";
+//                        }
+//                        if(listAddresses.get(0).getCountryName() != null){
+//                            address += listAddresses.get(0).getCountryName() + ", ";
+//                        }
+//
+//
+//                    }
+//                } catch (IOException e) {
+//
+//                    e.printStackTrace();
+//                }
 
             }
 
@@ -122,6 +121,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             }
         };
+//        if(Build.VERSION.SDK_INT < 23) {
+//            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+//        } else if(Build.VERSION.SDK_INT >= 23){
+//            if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION != PackageManager.PERMISSION_GRANTED)){
+//
+//            }
+//        }
 
         if(Build.VERSION.SDK_INT < 28){
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

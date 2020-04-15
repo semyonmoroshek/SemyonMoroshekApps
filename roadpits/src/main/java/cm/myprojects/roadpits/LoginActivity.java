@@ -5,7 +5,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import butterknife.BindView;
@@ -61,7 +64,9 @@ public class LoginActivity extends AppCompatActivity {
             ParseAnonymousUtils.logIn((user, e) -> {
                 if(user != null && e == null){
                     Toast.makeText(LoginActivity.this, "Welcome!", Toast.LENGTH_SHORT).show();
-                    user.saveInBackground();
+                    user.saveInBackground(e1 -> {
+                        enterToAccount();
+                    });
                 }
             });
         }
@@ -76,15 +81,18 @@ public class LoginActivity extends AppCompatActivity {
             appUser.setUsername(username);
             appUser.setPassword(password);
             appUser.signUpInBackground(e -> {
-                if(e == null){
+                if(e == null) {
                     Toast.makeText(LoginActivity.this, "Signed up!", Toast.LENGTH_LONG).show();
+                    enterToAccount();
                 }
             });
+
 
         }else if(mState == State.LOGIN){
             ParseUser.logInInBackground(username, password, (user, e) -> {
                 if(user != null && e == null){
                     Toast.makeText(LoginActivity.this, "User Logged", Toast.LENGTH_SHORT).show();
+                    enterToAccount();
                 }
             });
         }
@@ -101,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_login:
-
                 if(mState == State.SIGNUP){
                     mState = State.LOGIN;
                     item.setTitle("Sign up");
@@ -110,8 +117,15 @@ public class LoginActivity extends AppCompatActivity {
                     mState = State.SIGNUP;
                     btnSignUpLogin.setText("Sign up");
                 }
-
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void enterToAccount(){
+        if(ParseUser.getCurrentUser() != null){
+            Intent intent = new Intent(this, MapActivity.class);
+            startActivity(intent);
+
+        }
     }
 }
