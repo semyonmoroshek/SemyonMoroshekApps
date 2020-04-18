@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         ParseInstallation.getCurrentInstallation().saveInBackground();
         if(ParseUser.getCurrentUser() != null){
-            ParseUser.logOut();
+            enterToAccount();
         }
 
         ActionBar actionBar = getSupportActionBar();
