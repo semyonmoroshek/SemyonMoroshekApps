@@ -84,4 +84,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         database.close();
         return martialArts;
     }
+
+    public MartialArt returnMartialArtObjectByID(int id){
+        SQLiteDatabase database = getWritableDatabase();
+        String sqlQueryCommand = "select * from " + MARTIAL_ARTS_TABLE +
+                                   " where " + ID_KEY + " = " + id;
+        Cursor cursor = database.rawQuery(sqlQueryCommand, null);
+        MartialArt martialArtObject = null;
+
+        if(cursor.moveToFirst()){
+            martialArtObject = new MartialArt(
+                    Integer.parseInt(cursor.getString(0)),
+                    cursor.getString(1),
+                    cursor.getDouble(2),
+                    cursor.getString(3));
+        }
+        database.close();
+        return martialArtObject;
+    }
 }
