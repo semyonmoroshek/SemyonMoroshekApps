@@ -125,7 +125,6 @@ public class LoginActivity extends AppCompatActivity {
         if(ParseUser.getCurrentUser() != null){
             Intent intent = new Intent(this, MapActivity.class);
             startActivity(intent);
-
         }
     }
 }
