@@ -17,7 +17,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String PRICE_KEY = "price";
     private static final String COLOR_KEY = "COLOR";
 
-    public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
+    public DatabaseHandler(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION );
     }
 
