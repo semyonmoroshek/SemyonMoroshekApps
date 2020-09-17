@@ -33,5 +33,4 @@ dependencies {
         transitive = true
     }
     implementation 'com.andrognito.pinlockview:pinlockview:2.1.0'
-
 }

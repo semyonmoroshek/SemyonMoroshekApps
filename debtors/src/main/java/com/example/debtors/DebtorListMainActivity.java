@@ -17,7 +17,6 @@ public class DebtorListMainActivity  extends AppLockActivity {
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
 
-
     }
 
     @Override
