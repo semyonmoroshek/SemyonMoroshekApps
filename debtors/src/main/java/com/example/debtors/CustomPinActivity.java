@@ -5,7 +5,6 @@ import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
 public class CustomPinActivity extends AppLockActivity {
     @Override
     public void showForgotDialog() {
-//code//fefef
     }
 
     @Override
